@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    color: white;
+    background-color: brown;
+    display: inline-block;
+    padding: 20px;
+    /* margin-right: auto; */
+    border-radius: 20px;
+}
+
+.des {
+    display: flex;
+    justify-content: center;
+}
+
+.des p {
+    font-size: 20px;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.img {
+    border-radius: 30px;
+}
