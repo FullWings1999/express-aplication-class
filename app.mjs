@@ -1,83 +1,88 @@
 //const express = require("express");
 //const app = express();
 //const path = require("path");
+//import { request } from 'http';
 
 import express from 'express';
 import { engine } from 'express-handlebars';
-const app = express();
-
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const path = require("path");
+import * as fs from 'fs';
 
-const articales = require("./data/articales");
+const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-//設定樣版引擎
-
+//設定 express-handlebars 樣版引擎
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
-/* 修改這裡的端口號 
-const port = process.env.PORT || 5000; app.listen(port, () => { console.log(`Express app listening on port ${port}`); });*/
-
 /* 定義公開資料夾 */
 app.use(express.static('public'));
+
 /*  請求路徑是static時，才能用pubic folder*/
 app.use("/static",express.static('public'));
 
-app.get("/",function(req,res){
-    res.render("home");
-    //res.send("hello world");
-});
+//logger要裝在所有路由前面
+const logger = (req,res,next)=>{
+    /*
+    console.log("1.baseUrl",req.baseUrl);
+    console.log("2.url",req.url);
+    console.log("3.originalUrl",req.originalUrl);
+    console.log("hostname",req.hostname);
+    */
 
-//單篇文章
-app.get("/articales/:id",(req,res)=>{
-    const id = req.params.id;
-    res.render("articale",{
-        articales:[articales[id]],
-        backUrl:"/articales"
+    const datetime = new Date();
+    const timeStamp = datetime.toString()+" "+req.originalUrl+"\n";
+    console.log("timestamp",timeStamp);
+
+    /*
+    //logger寫法1.先讀取檔案在寫入檔案
+    fs.readFile(path.join(__dirname,"./log/log.txt"),
+    (err, data)=>{
+        if(err) console.log(err);
+
+        const newDate = data?data.toString()+"\n"+timeStamp:timeStamp;
+        //寫入log.txt
+        fs.writeFile(path.join(__dirname,"./log/log.txt"),
+        newDate,(err) =>{
+            if(err) console.log(err);
+            next();
+        });
+    
     });
+    */
+    //logger寫法2.
+    fs.writeFile(
+        path.join(__dirname,"./log/log.txt"),
+        timeStamp,
+        {flag:"a+"},
+        (err)=>{
+            if(err) console.log(err);
+            next();
+        }
+    );
+};
 
-    //res.render("artical");
-});
+app.use(logger);
 
-//文章列表
-app.get("/articales",(req,res)=>{
-    res.render("articales",{articales : articales});
-});
+//設定路由位在routes下的index.js
+app.use("/",require("./routes"));
 
-app.get("/about",(req,res)=>{
-    res.render("about");
-});
+//errhandler
+const errorHandler = (err, req, res, next)=>{
+    console.log("err",err);
+    console.log(err.name,":",err.message);
+    if(err){
+        res.status(500).send(`<h1>there is an error ${err.message}</h1>`);
+    };
+};
+app.use(errorHandler);
 
-app.get("/txt",(req,res)=>{
-    const absfile = path.join(__dirname, "/file/test.txt");
-    res.sendFile(absfile,(err)=>{
-        console.log(err);
-    });
-});
-
-app.get("/getHtml",(req,res)=>{
-    const absfile = path.join(__dirname, "/file/HTML/test.html");
-
-    res.sendFile(absfile,(err)=>{
-        console.log(err);
-    });
-});
-
-app.get("/getImg",(req,res)=>{
-    const absfile = path.join(__dirname, "/file/Img/pexels-pixabay-433155.jpg");
-
-    res.sendFile(absfile,(err)=>{
-        console.log(err);
-    });
-});
-
-/* error page */
-app.get("/*",function(req,res){
-    res.send("page not found");
-});
 
 app.listen(3000, ()=>{
     console.log('express app list on port 3000');

@@ -1,7 +1,7 @@
 {{#each articales}}
     {{#if this.publish}}
         <section class="articale">
-            <h3><a href="{{this.url}}">Go back</a> </h3>
+            <h3><a href="{{../backUrl}}">Go back</a> </h3>
             <br / >
             {{#with this}}
                 <h2 class="articale-title">
@@ -11,7 +11,7 @@
                     {{subTitle}}
                 </h3>
                 <h4 class="articale-date">
-                    {{date}}
+                    {{creatDate}}
                 </h4>
                 <p class="articale-content">
                     {{content}}
