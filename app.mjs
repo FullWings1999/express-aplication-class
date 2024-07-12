@@ -27,6 +27,10 @@ app.use(express.static('public'));
 /*  請求路徑是static時，才能用pubic folder*/
 app.use("/static",express.static('public'));
 
+//parse req.body
+app.use(express.json());
+app.use(express.urlencoded({extended:false }));
+
 //logger要裝在所有路由前面
 const logger = (req,res,next)=>{
     /*

@@ -1,14 +1,12 @@
 [
     {
-        "id": 0,
-        "title": "Ulterius cerno trado communis textilis alias spoliatio.",
-        "subTitle": "Curia alter accusamus sophismata caritas volubilis.",
-        "creatDate": "Fri Jun 28 2024 09:05:54 GMT+0800 (台北標準時間)",
-        "content": "Claustrum adversus asper vulnus adhuc. Summisse dolore odit videlicet utor compono vorago velit. Aer dolor spectaculum.\nDepereo inflammatio terra deputo sapiente. Stips audentia astrum talio brevis. Cimentarius audacia amitto ipsum defluo suppono umbra caput aestus.\nVeniam armarium abbas venustas autem varius incidunt. Tactus peccatus cum incidunt. Non aliquam nisi.",
-        "publish": [
-            true
-        ],
-        "url": "/articales/0"
+        "title": "first title",
+        "subTitle": "first",
+        "updatedDate": "Fri Jul 12 2024 16:03:26 GMT+0800 (台北標準時間)",
+        "content": "good try",
+        "publish": false,
+        "delete": true,
+        "deleteDate": "Fri Jul 12 2024 16:05:17 GMT+0800 (台北標準時間)"
     },
     {
         "id": 1,
@@ -53,5 +51,14 @@
             true
         ],
         "url": "/articales/4"
+    },
+    {
+        "id": 5,
+        "title": "test",
+        "subTitle": "test0712",
+        "creatDate": "Fri Jul 12 2024 15:59:50 GMT+0800 (台北標準時間)",
+        "content": "first try",
+        "url": "/articales/5",
+        "publish": true
     }
 ]
